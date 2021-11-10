@@ -8,7 +8,7 @@ import { PaymentService } from './payment.service';
   providers: [PaymentService],
   imports: [
     HttpModule.register({
-      timeout: 10000
+      timeout: 100000
     })
   ]
 })
