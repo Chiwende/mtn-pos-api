@@ -14,8 +14,8 @@ export class PaymentService {
 
     async generateToken(payload: any){
         console.log("authentication payload recieved ====> ", payload)
-        const encoded_creds = Buffer.from("ecc72926-db3e-488a-9c16-52eff1628e20" + ":" + "3fb07dfcbf1045c5b1d68d579d278d4b").toString('base64');
-        // console.log("encoded headers",encoded_creds)
+        const encoded_creds = Buffer.from("aa23eebb-53b8-4526-aa28-4eaa1ae7fabb" + ":" + "dc04add58a514e8cb7f316a066655891").toString('base64');
+        console.log("encoded headers",encoded_creds)
         const config = {
             method: 'post',
             url: 'https://proxy.momoapi.mtn.com/collection/token/',
@@ -34,8 +34,11 @@ export class PaymentService {
                 // console.log(res.headers.)
                 const response = res.data
                 const access_token = response.access_token
-                // console.log("returning this token", access_token)
+                console.log("returning this token", access_token)
                 return access_token
+            }).catch(error => {
+                console.log(error.status)
+                console.log(error.statusMessage)
             })
         return access
     }
@@ -74,11 +77,11 @@ export class PaymentService {
 
         const momoPayload = {
             "amount": payload.amount,
-            "currency": payload.currency,
+            "currency": "ZMW",
             "externalId": "12345678",
             "payer": {
               "partyIdType": "MSISDN",
-              "partyId": payload.partyId
+              "partyId": payload.msisdn
             },
             "payerMessage": "test request",
             "payeeNote": "test request"
@@ -88,7 +91,7 @@ export class PaymentService {
             method: 'post',
             url: 'https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay',
             headers: {
-              'Ocp-Apim-Subscription-Key': payload.ocp_apim_subscription_key,
+              'Ocp-Apim-Subscription-Key': "77207f3fc7644fbc8613516194d2119b",
               'Authorization': 'Bearer '+ access_token,
               'Content-Type': 'application/json',
               'X-Target-Environment': "mtnzambia",
